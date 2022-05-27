@@ -27,7 +27,7 @@ metadata:
 type: Opaque
 data:
   key: *agentKey # Replace this with your Instana agent key, encoded in base64
-  downloadKey: *downloadKey
+  downloadKey: ''
 ---
 apiVersion: v1
 kind: ConfigMap
