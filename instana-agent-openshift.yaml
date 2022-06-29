@@ -5,7 +5,7 @@ metadata:
   name: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.39
+    app.kubernetes.io/version: 1.2.40
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -14,7 +14,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.39
+    app.kubernetes.io/version: 1.2.40
 ---
 apiVersion: v1
 kind: Secret
@@ -23,7 +23,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.39
+    app.kubernetes.io/version: 1.2.40
 type: Opaque
 data:
   key: *agentKey # Replace this with your Instana agent key, encoded in base64
@@ -36,7 +36,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.39
+    app.kubernetes.io/version: 1.2.40
 data:
   cluster_name: *clusterName
   configuration.yaml: |
@@ -81,7 +81,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.39
+    app.kubernetes.io/version: 1.2.40
 spec:
   selector:
     matchLabels:
@@ -94,7 +94,7 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: instana-agent
-        app.kubernetes.io/version: 1.2.39
+        app.kubernetes.io/version: 1.2.40
         instana/agent-mode: "APM"
       annotations: {}
     spec:
@@ -146,18 +146,25 @@ spec:
           volumeMounts:
             - name: dev
               mountPath: /dev
+              mountPropagation: HostToContainer
             - name: run
               mountPath: /run
+              mountPropagation: HostToContainer
             - name: var-run
               mountPath: /var/run
+              mountPropagation: HostToContainer
             - name: sys
               mountPath: /sys
+              mountPropagation: HostToContainer
             - name: var-log
               mountPath: /var/log
+              mountPropagation: HostToContainer
             - name: var-lib
               mountPath: /var/lib
+              mountPropagation: HostToContainer
             - name: var-data
               mountPath: /var/data
+              mountPropagation: HostToContainer
             - name: machine-id
               mountPath: /etc/machine-id
             - name: configuration
@@ -242,7 +249,7 @@ metadata:
   name: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.39
+    app.kubernetes.io/version: 1.2.40
 rules:
 - nonResourceURLs:
     - "/version"
@@ -305,7 +312,7 @@ metadata:
   name: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.39
+    app.kubernetes.io/version: 1.2.40
 subjects:
 - kind: ServiceAccount
   name: instana-agent
