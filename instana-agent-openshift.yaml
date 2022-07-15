@@ -5,7 +5,7 @@ metadata:
   name: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.41
+    app.kubernetes.io/version: 1.2.42
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -14,7 +14,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.41
+    app.kubernetes.io/version: 1.2.42
 ---
 apiVersion: v1
 kind: Secret
@@ -23,7 +23,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.41
+    app.kubernetes.io/version: 1.2.42
 type: Opaque
 data:
   key: *agentKey # Replace this with your Instana agent key, encoded in base64
@@ -36,7 +36,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.41
+    app.kubernetes.io/version: 1.2.42
 data:
   cluster_name: *clusterName
   configuration.yaml: |
@@ -81,7 +81,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.41
+    app.kubernetes.io/version: 1.2.42
 spec:
   selector:
     matchLabels:
@@ -94,7 +94,7 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: instana-agent
-        app.kubernetes.io/version: 1.2.41
+        app.kubernetes.io/version: 1.2.42
         instana/agent-mode: "APM"
       annotations: {}
     spec:
@@ -249,7 +249,7 @@ metadata:
   name: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.41
+    app.kubernetes.io/version: 1.2.42
 rules:
 - nonResourceURLs:
     - "/version"
@@ -312,7 +312,7 @@ metadata:
   name: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.41
+    app.kubernetes.io/version: 1.2.42
 subjects:
 - kind: ServiceAccount
   name: instana-agent
