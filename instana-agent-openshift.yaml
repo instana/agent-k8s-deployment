@@ -5,7 +5,7 @@ metadata:
   name: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.56
+    app.kubernetes.io/version: 1.2.57
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -14,7 +14,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.56
+    app.kubernetes.io/version: 1.2.57
 ---
 apiVersion: v1
 kind: Service
@@ -23,7 +23,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.56
+    app.kubernetes.io/version: 1.2.57
 spec:
   selector:
     app.kubernetes.io/name: instana-agent
@@ -44,7 +44,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.56
+    app.kubernetes.io/version: 1.2.57
 spec:
   clusterIP: None
   selector:
@@ -67,7 +67,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.56
+    app.kubernetes.io/version: 1.2.57
 type: Opaque
 data:
   key: *agentKey # Replace this with your Instana agent key, encoded in base64
@@ -80,7 +80,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.56
+    app.kubernetes.io/version: 1.2.57
 data:
   cluster_name: *clusterName
   configuration.yaml: |
@@ -126,7 +126,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.56
+    app.kubernetes.io/version: 1.2.57
 spec:
   selector:
     matchLabels:
@@ -139,7 +139,7 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: instana-agent
-        app.kubernetes.io/version: 1.2.56
+        app.kubernetes.io/version: 1.2.57
         instana/agent-mode: "APM"
       annotations: {}
     spec:
@@ -234,7 +234,7 @@ spec:
           ports:
             - containerPort: 42699
         - name: leader-elector
-          image: "icr.io/instana/leader-elector:0.5.16"
+          image: "icr.io/instana/leader-elector:0.5.18"
           env:
             - name: INSTANA_AGENT_POD_NAME
               valueFrom:
@@ -294,7 +294,7 @@ metadata:
   name: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.56
+    app.kubernetes.io/version: 1.2.57
 rules:
 - nonResourceURLs:
     - "/version"
@@ -357,7 +357,7 @@ metadata:
   name: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.56
+    app.kubernetes.io/version: 1.2.57
 subjects:
 - kind: ServiceAccount
   name: instana-agent
