@@ -5,7 +5,7 @@ metadata:
   name: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.58
+    app.kubernetes.io/version: 1.2.59
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -14,7 +14,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.58
+    app.kubernetes.io/version: 1.2.59
 ---
 apiVersion: v1
 kind: Service
@@ -23,7 +23,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.58
+    app.kubernetes.io/version: 1.2.59
 spec:
   selector:
     app.kubernetes.io/name: instana-agent
@@ -43,7 +43,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.58
+    app.kubernetes.io/version: 1.2.59
 spec:
   clusterIP: None
   selector:
@@ -66,7 +66,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.58
+    app.kubernetes.io/version: 1.2.59
 type: Opaque
 data:
   key: *agentKey # Replace this with your Instana agent key, encoded in base64
@@ -79,7 +79,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.58
+    app.kubernetes.io/version: 1.2.59
 data:
   cluster_name: *clusterName
   configuration.yaml: |
@@ -125,7 +125,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.58
+    app.kubernetes.io/version: 1.2.59
 spec:
   selector:
     matchLabels:
@@ -138,7 +138,7 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: instana-agent
-        app.kubernetes.io/version: 1.2.58
+        app.kubernetes.io/version: 1.2.59
         instana/agent-mode: "APM"
       annotations: {}
     spec:
@@ -293,7 +293,7 @@ metadata:
   name: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.58
+    app.kubernetes.io/version: 1.2.59
 rules:
 - nonResourceURLs:
     - "/version"
@@ -356,7 +356,7 @@ metadata:
   name: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.58
+    app.kubernetes.io/version: 1.2.59
 subjects:
 - kind: ServiceAccount
   name: instana-agent
