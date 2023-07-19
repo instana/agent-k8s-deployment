@@ -5,7 +5,7 @@ metadata:
   name: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.59
+    app.kubernetes.io/version: 1.2.61
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -14,7 +14,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.59
+    app.kubernetes.io/version: 1.2.61
 ---
 apiVersion: v1
 kind: Service
@@ -23,7 +23,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.59
+    app.kubernetes.io/version: 1.2.61
 spec:
   selector:
     app.kubernetes.io/name: instana-agent
@@ -43,7 +43,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.59
+    app.kubernetes.io/version: 1.2.61
 spec:
   clusterIP: None
   selector:
@@ -66,7 +66,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.59
+    app.kubernetes.io/version: 1.2.61
 type: Opaque
 data:
   key: *agentKey # Replace this with your Instana agent key, encoded in base64
@@ -79,7 +79,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.59
+    app.kubernetes.io/version: 1.2.61
 data:
   cluster_name: *clusterName
   configuration.yaml: |
@@ -116,6 +116,12 @@ data:
     #com.instana.plugin.generic.hardware:
     #  enabled: true # disabled by default
     #  availability-zone: 'zone'
+    
+
+  
+  configuration-disable-kubernetes-sensor.yaml: |
+    com.instana.plugin.kubernetes:
+      enabled: false
 ---
 # TODO: Combine into single template with agent-daemonset-with-zones.yaml---
 apiVersion: apps/v1
@@ -125,7 +131,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.59
+    app.kubernetes.io/version: 1.2.61
 spec:
   selector:
     matchLabels:
@@ -138,7 +144,7 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: instana-agent
-        app.kubernetes.io/version: 1.2.59
+        app.kubernetes.io/version: 1.2.61
         instana/agent-mode: "APM"
       annotations: {}
     spec:
@@ -223,13 +229,16 @@ spec:
             - name: configuration
               subPath: configuration.yaml
               mountPath: /root/configuration.yaml
+            - name: configuration # TODO: These shouldn't have the same name
+              subPath: configuration-disable-kubernetes-sensor.yaml
+              mountPath: /opt/instana/agent/etc/instana/configuration-disable-kubernetes-sensor.yaml
           livenessProbe:
             httpGet:
               host: 127.0.0.1 # localhost because Pod has hostNetwork=true
               path: /status
               port: 42699
-            initialDelaySeconds: 300 # startupProbe isnt available before K8s 1.16
-            timeoutSeconds: 3
+            initialDelaySeconds: 600 # startupProbe isnt available before K8s 1.16
+            timeoutSeconds: 5
             periodSeconds: 10
             failureThreshold: 3
           resources:
@@ -241,32 +250,6 @@ spec:
               cpu: 1.5
           ports:
             - containerPort: 42699
-        - name: leader-elector
-          image: "icr.io/instana/leader-elector:0.5.18"
-          env:
-            - name: INSTANA_AGENT_POD_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: metadata.name
-          command:
-            - "/busybox/sh"
-            - "-c"
-            - "sleep 12 && /app/server --election=instana --http=localhost:42655 --id=$(INSTANA_AGENT_POD_NAME)"
-          resources:
-            requests:
-              cpu: 0.1
-              memory: "64Mi"
-          livenessProbe:
-            httpGet: # Leader elector /health endpoint expects version 0.5.8 minimum, otherwise always returns 200 OK
-              host: 127.0.0.1 # localhost because Pod has hostNetwork=true
-              path: /health
-              port: 42655
-            initialDelaySeconds: 30
-            timeoutSeconds: 3
-            periodSeconds: 3
-            failureThreshold: 3
-          ports:
-            - containerPort: 42655
       volumes:
         - name: dev
           hostPath:
@@ -315,7 +298,7 @@ metadata:
   name: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.59
+    app.kubernetes.io/version: 1.2.61
 rules:
 - nonResourceURLs:
     - "/version"
@@ -368,7 +351,7 @@ metadata:
   name: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.59
+    app.kubernetes.io/version: 1.2.61
 subjects:
 - kind: ServiceAccount
   name: instana-agent
