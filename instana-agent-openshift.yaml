@@ -5,7 +5,7 @@ metadata:
   name: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.63
+    app.kubernetes.io/version: 1.2.64
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -14,7 +14,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.63
+    app.kubernetes.io/version: 1.2.64
 ---
 apiVersion: v1
 kind: Service
@@ -23,7 +23,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.63
+    app.kubernetes.io/version: 1.2.64
 spec:
   selector:
     app.kubernetes.io/name: instana-agent
@@ -43,7 +43,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.63
+    app.kubernetes.io/version: 1.2.64
 spec:
   clusterIP: None
   selector:
@@ -54,10 +54,6 @@ spec:
       protocol: TCP
       port: 42699
       targetPort: 42699
-    - name: agent-socket
-      protocol: TCP
-      port: 42666
-      targetPort: 42666
 ---
 apiVersion: v1
 kind: Secret
@@ -66,7 +62,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.63
+    app.kubernetes.io/version: 1.2.64
 type: Opaque
 data:
   key: *agentKey # Replace this with your Instana agent key, encoded in base64
@@ -79,7 +75,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.63
+    app.kubernetes.io/version: 1.2.64
 data:
   cluster_name: *clusterName
   configuration.yaml: |
@@ -131,7 +127,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.63
+    app.kubernetes.io/version: 1.2.64
 spec:
   selector:
     matchLabels:
@@ -144,7 +140,7 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: instana-agent
-        app.kubernetes.io/version: 1.2.63
+        app.kubernetes.io/version: 1.2.64
         instana/agent-mode: "APM"
       annotations: {}
     spec:
@@ -276,7 +272,7 @@ metadata:
   name: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.63
+    app.kubernetes.io/version: 1.2.64
 rules:
 - nonResourceURLs:
     - "/version"
@@ -287,56 +283,13 @@ rules:
   verbs: ["get"]
   apiGroups: []
   resources: []
-- apiGroups: ["batch"]
-  resources:
-    - "jobs"
-    - "cronjobs"
-  verbs: ["get", "list", "watch"]
-- apiGroups: ["extensions"]
-  resources:
-    - "deployments"
-    - "replicasets"
-    - "ingresses"
-  verbs: ["get", "list", "watch"]
-- apiGroups: ["apps"]
-  resources:
-    - "deployments"
-    - "replicasets"
-    - "daemonsets"
-    - "statefulsets"
-  verbs: ["get", "list", "watch"]
 - apiGroups: [""]
   resources:
-    - "namespaces"
-    - "events"
-    - "services"
-    - "endpoints"
     - "nodes"
     - "nodes/stats"
     - "nodes/metrics"
     - "pods"
-    - "replicationcontrollers"
-    - "componentstatuses"
-    - "resourcequotas"
-    - "persistentvolumes"
-    - "persistentvolumeclaims"
   verbs: ["get", "list", "watch"]
-- apiGroups: [""]
-  resources:
-    - "endpoints"
-  verbs: ["create", "update", "patch"]
-- apiGroups: ["networking.k8s.io"]
-  resources:
-    - "ingresses"
-  verbs: ["get", "list", "watch"]
-- apiGroups: ["apps.openshift.io"]
-  resources:
-    - "deploymentconfigs"
-  verbs: ["get", "list", "watch"]
-- apiGroups: ["security.openshift.io"]
-  resourceNames: ["privileged"]
-  resources: ["securitycontextconstraints"]
-  verbs: ["use"]
 ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -344,7 +297,7 @@ metadata:
   name: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.63
+    app.kubernetes.io/version: 1.2.64
 subjects:
 - kind: ServiceAccount
   name: instana-agent
@@ -361,7 +314,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.63
+    app.kubernetes.io/version: 1.2.64
 data:
   backend: ${agentEndpoint}:${agentEndpointPort}
 ---
@@ -373,7 +326,7 @@ metadata:
   labels:
     app: k8sensor
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.63
+    app.kubernetes.io/version: 1.2.64
 spec:
   replicas: 3
   selector:
@@ -386,7 +339,7 @@ spec:
         
         app: k8sensor
         app.kubernetes.io/name: instana-agent-k8s-sensor
-        app.kubernetes.io/version: 1.2.63
+        app.kubernetes.io/version: 1.2.64
         instana/agent-mode: KUBERNETES
       annotations:
         # To ensure that changes to agent.configuration_yaml or agent.additional_backends trigger a Pod recreation, we keep a SHA here
@@ -452,18 +405,16 @@ spec:
             name: instana-agent
       affinity:
         podAntiAffinity:
-          # Soft anti-affinity policy: try not to schedule multiple kubernetes-sensor pods on the same node.
-          # If the policy is set to "requiredDuringSchedulingIgnoredDuringExecution", if the cluster has
-          # fewer nodes than the amount of desired replicas, `helm install/upgrade --wait` will not return.
           preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
+          - podAffinityTerm:
               labelSelector:
                 matchExpressions:
                 - key: instana/agent-mode
                   operator: In
-                  values: [ KUBERNETES ]
-              topologyKey: "kubernetes.io/hostname"
+                  values:
+                  - KUBERNETES
+              topologyKey: kubernetes.io/hostname
+            weight: 100
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -471,7 +422,7 @@ metadata:
   name: k8sensor
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.63
+    app.kubernetes.io/version: 1.2.64
 rules:
   -
     nonResourceURLs:
@@ -592,7 +543,7 @@ metadata:
   name: k8sensor
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.63
+    app.kubernetes.io/version: 1.2.64
 roleRef:
   kind: ClusterRole
   name: k8sensor
@@ -609,4 +560,4 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.63
+    app.kubernetes.io/version: 1.2.64
