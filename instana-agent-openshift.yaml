@@ -5,7 +5,7 @@ metadata:
   name: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.65
+    app.kubernetes.io/version: 1.2.66
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -14,7 +14,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.65
+    app.kubernetes.io/version: 1.2.66
 ---
 apiVersion: v1
 kind: Service
@@ -23,7 +23,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.65
+    app.kubernetes.io/version: 1.2.66
 spec:
   selector:
     app.kubernetes.io/name: instana-agent
@@ -43,7 +43,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.65
+    app.kubernetes.io/version: 1.2.66
 spec:
   clusterIP: None
   selector:
@@ -62,7 +62,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.65
+    app.kubernetes.io/version: 1.2.66
 type: Opaque
 data:
   key: *agentKey # Replace this with your Instana agent key, encoded in base64
@@ -75,7 +75,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.65
+    app.kubernetes.io/version: 1.2.66
 data:
   cluster_name: *clusterName
   configuration.yaml: |
@@ -127,7 +127,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.65
+    app.kubernetes.io/version: 1.2.66
 spec:
   selector:
     matchLabels:
@@ -140,7 +140,7 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: instana-agent
-        app.kubernetes.io/version: 1.2.65
+        app.kubernetes.io/version: 1.2.66
         instana/agent-mode: "APM"
       annotations: {}
     spec:
@@ -230,7 +230,7 @@ spec:
             failureThreshold: 3
           resources:
             requests:
-              memory: "512Mi"
+              memory: "768Mi"
               cpu: 0.5
             limits:
               memory: "768Mi"
@@ -272,7 +272,7 @@ metadata:
   name: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.65
+    app.kubernetes.io/version: 1.2.66
 rules:
 - nonResourceURLs:
     - "/version"
@@ -301,7 +301,7 @@ metadata:
   name: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.65
+    app.kubernetes.io/version: 1.2.66
 subjects:
 - kind: ServiceAccount
   name: instana-agent
@@ -318,7 +318,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.65
+    app.kubernetes.io/version: 1.2.66
 data:
   backend: ${agentEndpoint}:${agentEndpointPort}
 ---
@@ -330,7 +330,7 @@ metadata:
   labels:
     app: k8sensor
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.65
+    app.kubernetes.io/version: 1.2.66
 spec:
   replicas: 3
   selector:
@@ -343,7 +343,7 @@ spec:
         
         app: k8sensor
         app.kubernetes.io/name: instana-agent-k8s-sensor
-        app.kubernetes.io/version: 1.2.65
+        app.kubernetes.io/version: 1.2.66
         instana/agent-mode: KUBERNETES
       annotations:
         # To ensure that changes to agent.configuration_yaml or agent.additional_backends trigger a Pod recreation, we keep a SHA here
@@ -426,7 +426,7 @@ metadata:
   name: k8sensor
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.65
+    app.kubernetes.io/version: 1.2.66
 rules:
   -
     nonResourceURLs:
@@ -547,7 +547,7 @@ metadata:
   name: k8sensor
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.65
+    app.kubernetes.io/version: 1.2.66
 roleRef:
   kind: ClusterRole
   name: k8sensor
@@ -564,4 +564,4 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.65
+    app.kubernetes.io/version: 1.2.66
