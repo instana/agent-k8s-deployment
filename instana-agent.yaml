@@ -5,7 +5,7 @@ metadata:
   name: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.66
+    app.kubernetes.io/version: 1.2.67
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -14,7 +14,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.66
+    app.kubernetes.io/version: 1.2.67
 ---
 apiVersion: v1
 kind: Service
@@ -23,7 +23,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.66
+    app.kubernetes.io/version: 1.2.67
 spec:
   selector:
     app.kubernetes.io/name: instana-agent
@@ -43,7 +43,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.66
+    app.kubernetes.io/version: 1.2.67
 spec:
   clusterIP: None
   selector:
@@ -62,7 +62,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.66
+    app.kubernetes.io/version: 1.2.67
 type: Opaque
 data:
   key: *agentKey # Replace this with your Instana agent key, encoded in base64
@@ -75,7 +75,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.66
+    app.kubernetes.io/version: 1.2.67
 data:
   cluster_name: *clusterName
   configuration.yaml: |
@@ -127,7 +127,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.66
+    app.kubernetes.io/version: 1.2.67
 spec:
   selector:
     matchLabels:
@@ -140,9 +140,9 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: instana-agent
-        app.kubernetes.io/version: 1.2.66
+        app.kubernetes.io/version: 1.2.67
         instana/agent-mode: "APM"
-      annotations: {}
+      annotations:
     spec:
       serviceAccountName: instana-agent
       hostNetwork: true
@@ -153,8 +153,7 @@ spec:
           image: "icr.io/instana/agent:latest"
           imagePullPolicy: Always
           env:
-            - name: INSTANA_AGENT_LEADER_ELECTOR_PORT
-              value: "42655"
+            
             - name: INSTANA_ZONE
               value: *zoneName
             - name: INSTANA_KUBERNETES_CLUSTER_NAME
@@ -225,6 +224,7 @@ spec:
             - name: configuration
               subPath: configuration.yaml
               mountPath: /root/configuration.yaml
+            
             - name: configuration # TODO: These shouldn't have the same name
               subPath: configuration-disable-kubernetes-sensor.yaml
               mountPath: /opt/instana/agent/etc/instana/configuration-disable-kubernetes-sensor.yaml
@@ -294,7 +294,7 @@ metadata:
   name: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.66
+    app.kubernetes.io/version: 1.2.67
 rules:
 - nonResourceURLs:
     - "/version"
@@ -317,7 +317,7 @@ metadata:
   name: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.66
+    app.kubernetes.io/version: 1.2.67
 subjects:
 - kind: ServiceAccount
   name: instana-agent
@@ -334,7 +334,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.66
+    app.kubernetes.io/version: 1.2.67
 data:
   backend: ${agentEndpoint}:${agentEndpointPort}
 ---
@@ -346,7 +346,7 @@ metadata:
   labels:
     app: k8sensor
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.66
+    app.kubernetes.io/version: 1.2.67
 spec:
   replicas: 3
   selector:
@@ -359,12 +359,9 @@ spec:
         
         app: k8sensor
         app.kubernetes.io/name: instana-agent-k8s-sensor
-        app.kubernetes.io/version: 1.2.66
+        app.kubernetes.io/version: 1.2.67
         instana/agent-mode: KUBERNETES
       annotations:
-        # To ensure that changes to agent.configuration_yaml or agent.additional_backends trigger a Pod recreation, we keep a SHA here
-        # Unfortunately, we cannot use the lookup function to check on the values in the configmap, otherwise we break Helm < 3.2
-        instana-configuration-hash: da39a3ee5e6b4b0d3255bfef95601890afd80709
     spec:
       serviceAccountName: k8sensor
       containers:
@@ -442,7 +439,7 @@ metadata:
   name: k8sensor
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.66
+    app.kubernetes.io/version: 1.2.67
 rules:
   -
     nonResourceURLs:
@@ -563,7 +560,7 @@ metadata:
   name: k8sensor
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.66
+    app.kubernetes.io/version: 1.2.67
 roleRef:
   kind: ClusterRole
   name: k8sensor
@@ -580,4 +577,4 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.66
+    app.kubernetes.io/version: 1.2.67
