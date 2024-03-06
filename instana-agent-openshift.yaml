@@ -5,7 +5,7 @@ metadata:
   name: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.69
+    app.kubernetes.io/version: 1.2.70
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -14,7 +14,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.69
+    app.kubernetes.io/version: 1.2.70
 ---
 apiVersion: v1
 kind: Service
@@ -23,7 +23,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.69
+    app.kubernetes.io/version: 1.2.70
 spec:
   selector:
     app.kubernetes.io/name: instana-agent
@@ -43,7 +43,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.69
+    app.kubernetes.io/version: 1.2.70
 spec:
   clusterIP: None
   selector:
@@ -62,7 +62,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.69
+    app.kubernetes.io/version: 1.2.70
 type: Opaque
 data:
   key: *agentKey # Replace this with your Instana agent key, encoded in base64
@@ -75,7 +75,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.69
+    app.kubernetes.io/version: 1.2.70
 data:
   cluster_name: *clusterName
   configuration.yaml: |
@@ -127,7 +127,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.69
+    app.kubernetes.io/version: 1.2.70
 spec:
   selector:
     matchLabels:
@@ -140,7 +140,7 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: instana-agent
-        app.kubernetes.io/version: 1.2.69
+        app.kubernetes.io/version: 1.2.70
         instana/agent-mode: "APM"
       annotations:
         # To ensure that changes to agent.configuration_yaml or agent.additional_backends trigger a Pod recreation, we keep a SHA here
@@ -276,7 +276,7 @@ metadata:
   name: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.69
+    app.kubernetes.io/version: 1.2.70
 rules:
 - nonResourceURLs:
     - "/version"
@@ -305,7 +305,7 @@ metadata:
   name: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.69
+    app.kubernetes.io/version: 1.2.70
 subjects:
 - kind: ServiceAccount
   name: instana-agent
@@ -322,7 +322,7 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.69
+    app.kubernetes.io/version: 1.2.70
 data:
   backend: ${agentEndpoint}:${agentEndpointPort}
 ---
@@ -334,7 +334,7 @@ metadata:
   labels:
     app: k8sensor
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.69
+    app.kubernetes.io/version: 1.2.70
 spec:
   replicas: 3
   selector:
@@ -347,7 +347,7 @@ spec:
         
         app: k8sensor
         app.kubernetes.io/name: instana-agent-k8s-sensor
-        app.kubernetes.io/version: 1.2.69
+        app.kubernetes.io/version: 1.2.70
         instana/agent-mode: KUBERNETES
       annotations:
         # To ensure that changes to agent.configuration_yaml or agent.additional_backends trigger a Pod recreation, we keep a SHA here
@@ -430,7 +430,7 @@ metadata:
   name: k8sensor
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.69
+    app.kubernetes.io/version: 1.2.70
 rules:
   -
     nonResourceURLs:
@@ -551,7 +551,7 @@ metadata:
   name: k8sensor
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.69
+    app.kubernetes.io/version: 1.2.70
 roleRef:
   kind: ClusterRole
   name: k8sensor
@@ -568,4 +568,4 @@ metadata:
   namespace: instana-agent
   labels:
     app.kubernetes.io/name: instana-agent
-    app.kubernetes.io/version: 1.2.69
+    app.kubernetes.io/version: 1.2.70
